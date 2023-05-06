@@ -18,7 +18,7 @@
 
 package com.wilddiary.commons.audit;
 
-import org.springframework.cloud.sleuth.annotation.NewSpan;
+import io.micrometer.tracing.annotation.NewSpan;
 
 /** Interface for the Auditor implementations. The implementations should be thread-safe. */
 @FunctionalInterface

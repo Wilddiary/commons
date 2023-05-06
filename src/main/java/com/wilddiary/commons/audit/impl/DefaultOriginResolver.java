@@ -23,6 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
+/**
+ * Default implementation for resolving the origin (client IP address). Resolves to the IP address
+ * from the security context authentication instance.
+ */
 @Slf4j
 public class DefaultOriginResolver implements OriginResolver {
 
@@ -34,9 +38,8 @@ public class DefaultOriginResolver implements OriginResolver {
     if (context != null
         && context.getAuthentication() != null
         && context.getAuthentication().getDetails() != null
-        && context.getAuthentication().getDetails() instanceof WebAuthenticationDetails) {
-      String remoteAddress =
-          ((WebAuthenticationDetails) context.getAuthentication().getDetails()).getRemoteAddress();
+        && context.getAuthentication().getDetails() instanceof WebAuthenticationDetails details) {
+      String remoteAddress = details.getRemoteAddress();
       log.debug("Authentication type - {}", context.getAuthentication().getClass().getName());
       log.debug("Resolved origin is - {}", remoteAddress);
       return remoteAddress;
